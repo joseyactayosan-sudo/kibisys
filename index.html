@@ -1,15 +1,202 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <title>Hello!</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.css">   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css">
+
+    <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js"></script>
+
 </head>
+  <style>
+    body {
+      height: 100vh;
+    }
+
+    #content {
+      padding: 20px;
+    }
+    #loginContainer {     
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #e8fff0e6;    
+    }
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+   .ali_c {text-align:center;}
+
+   .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: #333;
+   }
+
+        .password-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .password-container input {
+            padding: 10px;
+        }
+
+        .password-container .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #555;
+        }
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
+.mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
+    font-size: 14px;
+}
+
+.i-account{ font-size: 80px;}
+@media screen and (max-width:630px) {
+  .text-condensedLight, .mdl-textfield__input, .mdl-textfield__label { font-size: 18px;}
+}
+
+#render_filtro > div{display: flex;}
+
+@media (min-width: 1200px) {
+    .container {        max-width: 1140px;    }
+}
+@media (min-width: 992px) {
+    .container {        max-width: 960px;    }
+}
+@media (min-width: 768px) {
+    .container {        max-width: 720px;    }
+}
+@media (min-width: 576px) {
+    .container {        max-width: 540px;    }
+}
+
+
+.p-4 {
+    padding: 1.5rem !important;
+}
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+</style>
 
 <body>
-<h2>Hola Loko</h2>
 
+<!--  <h2>Iniciar sesión</h2>-->
+  <form action="/auth/login" method="post">
+
+    <div id="spinner" class="spinner" style="display: none; z-index: 99999;">
+        <i class="fas fa-spinner fa-spin"></i> Cargando...
+    </div>
+  <!-- Login Modal -->
+  <div class="container" id="loginContainer">
+    <div class="card p-4" style="width: 300px;">
+		<p class="i-account ali_c"><i class="zmdi zmdi-account-circle"></i></p>
+    <h4 class="ali_c">Iniciar Sesión</h4>
+
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label password-container">
+	 			  <input class="mdl-textfield__input" type="text" id="username" name="username" value="neon_pablo" />
+			    <label class="mdl-textfield__label">Usuario</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label password-container">
+			    <input class="mdl-textfield__input" type="password" id="password" name="password" value="$189x234y225a" />
+			    <label class="mdl-textfield__label">Clave</label>
+          <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+			</div>
+
+			<button id="loginBtn" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">
+				Aceptar <i class="zmdi zmdi-mail-send"></i>
+			</button>
+      <div id="loginError" class="text-danger mt-2" style="display:none;">Error en usuario o contraseña</div>
+    </div>
+	</div> 
+  </form>
+
+  <script>
+    $(function() {
+      const urlParams = new URLSearchParams(window.location.search);    
+      if(urlParams.get('error')) {
+        $('#loginError').text('Usuario o contraseña incorrectos');
+      }
+    });
+  </script>
+
+  <script>
+ $(document).ready(function() {
+   $(document).on('click','input',function(){ $(this).select(); });
+   $('#username').focus().select();
+
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    
+    usernameInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            event.preventDefault(); 
+            passwordInput.select();
+        }
+    });
+
+        const togglePassword = document.getElementById('togglePassword');
+       
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Cambiar el ícono según el estado
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+           
+      // Manejar login
+      $('#loginBtn').click(function() {
+        const spinner = $('#spinner');
+        const usuario = $('#username').val();
+        const contrasena = $('#password').val();
+
+        // Validar campos
+        if (!usuario || !contrasena) {
+          $('#loginError').text('Por favor, complete todos los campos').show();
+          return;
+        }
+        spinner.show();
+                  
+      });
+
+
+    });
+</script>
 </body>
-
 </html>
