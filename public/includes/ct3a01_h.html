@@ -1,1 +1,218 @@
-x
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jerarquía de Familias</title>
+
+  <!-- Bootstrap 5 -->  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- jQuery  -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    .tree ul {
+      padding-left: 20px;
+      list-style: none;
+    }
+    .tree li {
+      margin: 4px 0;
+      list-style: none;
+    }
+    .caret {
+      cursor: pointer;
+      user-select: none;
+      font-weight: bold;
+    }
+    .caret::before {
+      content: "▶ ";
+      color: #555;
+      display: inline-block;
+      margin-right: 6px;
+      transition: transform 0.2s;
+    }
+    .caret-down::before {
+      transform: rotate(90deg);
+    }
+    .nested {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    .selectable {
+      cursor: pointer;
+      color: #007bff;
+    }
+    .selectable:hover {
+      text-decoration: underline;
+    }
+    .selected {
+      background-color: #d4edda;
+      font-weight: bold;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <h3>Jerarquía de Familias</h3>
+    <div id="tree-container"></div>
+    <div class="d-none">
+      <strong>Seleccionado:</strong> <span id="seleccionado">Ninguno</span>
+      <input type="text" id="key_fam" value=""/>
+    </div>
+  </div>
+
+ <script>
+    $(document).ready(function () {
+            // Función para obtener parámetro de la URL
+            function getParameterByName(name) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                const url = window.location.href;
+                const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+                const results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+
+            // Recuperar el valor
+            const key_id = getParameterByName('key_id');
+            if (key_id) {
+                $('#key_fam').val(key_id);
+            }
+                  
+      let selectedItem = null;
+
+     (async () => {
+          const filename= $('#body_content').attr('file_name');
+          const url='/api/get_ct3a01_h';
+          var parametros = {"opcion": filename, "key_ret": 'key_fam'};    
+          const data = await $.ajax({
+                              data:  parametros,
+                              url : url,
+                              type: 'GET',
+                              contentType: "application/json",
+                              dataType: "json",
+                              error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log('error', errorThrown);
+                              }
+                            }); 
+
+        const { tree, nodeMap } = await buildTree(data);
+        $('#tree-container').html(await renderTree(tree));
+        attachEvents(nodeMap);
+      })(); 
+        
+
+    function buildTree(items) {
+      const nodeMap = {};  // Para buscar nodos por key_fam
+      const roots = [];
+
+      items.forEach(item => {
+        const key = item.key_fam.trim();
+        const level = key.length;
+        const node = { ...item, key_fam: key, children: [], level };
+        nodeMap[key] = node;
+
+        if (level === 2) {
+          roots.push(node);
+        } else {
+          const parentKey = key.slice(0, -2);
+          if (nodeMap[parentKey]) {
+            nodeMap[parentKey].children.push(node);
+          }
+        }
+      });
+
+      // Ordenar hijos
+      Object.values(nodeMap).forEach(node => {
+        node.children.sort((a, b) => a.key_fam.localeCompare(b.key_fam));
+      });
+
+      return { tree: roots, nodeMap };
+    }
+
+    function renderTree(nodes) {
+      let html = '<ul class="tree">';
+      nodes.forEach(node => {
+        const hasChildren = node.children.length > 0;
+        const isLeaf = node.level === 6;
+        const caretClass = hasChildren ? 'caret' : '';
+        const selectableClass = isLeaf ? 'selectable' : '';
+        const dataKey = `data-key="${node.key_fam}"`;
+
+        html += `<li ${dataKey}>`;
+        if (hasChildren) {
+          html += `<span class="${caretClass}">${node.key_fam} - ${node.des_fam}</span>`;
+          html += `<ul class="nested">${renderTree(node.children)}</ul>`;
+        } else {
+          html += `<span class="${selectableClass}" ${dataKey}>${node.key_fam} - ${node.des_fam}</span>`;
+        }
+        html += `</li>`;
+      });
+      html += `</ul>`;
+      return html;
+    }
+
+    function getFullPath(node, nodeMap) {
+      const path = [];
+      let current = node;
+
+      while (current) {
+        path.unshift(current.des_fam);
+        const parentKey = current.key_fam.slice(0, -2);
+        current = parentKey.length >= 2 ? nodeMap[parentKey] : null;
+      }
+
+      return path.join(' »» ');
+    }
+
+    function attachEvents(nodeMap) {
+      // Expandir/colapsar
+      $('#tree-container').on('click', '.caret', function (e) {
+        e.stopPropagation();
+        $(this).toggleClass('caret-down');
+        $(this).next('.nested').toggleClass('active');
+      });
+
+      // Seleccionar solo hojas (6 dígitos)
+      $('#tree-container').on('click', '.selectable', function () {
+        const key = $(this).data('key');
+        const node = nodeMap[key];
+        const fullPath = getFullPath(node, nodeMap);
+
+
+        // Quitar selección anterior
+        if (selectedItem) {
+          selectedItem.removeClass('selected');
+        }
+
+        // Marcar nuevo
+        $(this).addClass('selected');
+        selectedItem = $(this);
+
+        $('#seleccionado').text(fullPath);
+        //console.log('Ruta completa:', fullPath);
+        //console.log('Key seleccionado:', key);
+    
+        let rows_t={}
+        rows_t.key_ide=$('#key_fam').val();
+        rows_t.key_fam=key;
+        rows_t.des_fam=fullPath;
+        window.parent.r_ct3a01(rows_t);
+
+      });
+    }
+
+        
+    });
+
+ </script>
+
+</body>
+</html>
