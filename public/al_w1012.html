@@ -1,0 +1,187 @@
+ 
+<form name="encabez" id="encabez" method="POST" action="" style="width: 100%;  margin-left: -20px;">
+ <div id="" class="div_scrollable">  
+
+    <div class="panel panel-default" id="render_cabecera" style="padding: 0px 12px 0px 12px;">  
+    <div class="row">
+        <div class="col-md-6 col-xs-12 div_bord">
+            <div class="row">
+                <div class="col-md-5 col-xs-12">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Número de Guía :</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="key_ing" readonly tabindex="-1" value="">
+                </div>
+                </div>
+
+                <div class="col-md-4 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Fecha :</label>
+                    <input type="date" id="fec_ing" name="fec_ing" class="mdl-textfield__input ali_c" min="" max="" value="">
+                </div>
+                </div>
+
+            <div class="col-md-3 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select name="tip_mon" id="tip_mon" class="mdl-textfield__input"><option value="S/.">S/.</option><option value="US$">US$</option></select>
+                    <label class="mdl-textfield__label">Mnd:</label>
+                </div>
+            </div>
+
+            </div>
+            <div class="row">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: flex;">
+                    <label class="mdl-textfield__label">Nro.RUC :</label>
+                    <input class="mdl-textfield__input" type="text" id="key_ent" value="">
+                    <input class="hidden" type="text" id="num_ruc" name="num_ruc" value="">
+                    <button type="button" id="btnBuscarRUC" size="4" class="btn btn-link btn-sm" style="display: none;"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Observaciones:</label>
+                    <input readonly="" class="mdl-textfield__input" type="text" id="obs_ing" name="obs_ing" value="">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">N° Jabas :</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="tot_jab" readonly tabindex="-1" value="">
+                </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">N° Aves :</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="tot_ave" readonly tabindex="-1" value="">
+                </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Peso Neto :</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="pes_net" readonly tabindex="-1" value="">
+                </div>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Repesada Neta :</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="rpe_tot" readonly tabindex="-1" value="">
+                </div>
+                </div>
+        </div>
+        </div>
+
+        <div class="col-md-4 col-xs-12 div_bord">
+            <div class="row">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Und. Gestión :</label>
+                    <input class="mdl-textfield__input ali_l" type="text" id="ugi_cos" name="ugi_cos" tabindex="-1" value="">
+                </div>
+            </div>
+            <div class="row">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select disabled="" class="mdl-textfield__input" id="tip_tra" name="tip_tra"><option value="-1">| Seleccione un Motivo</option><option value="101">101 | INGRESO POR COMPRA</option><option value="103">103 | INGRESO POR DEVOLUCION</option><option value="108">108 | INGRESO POR TRASLADO </option><option value="109">109 | INGRESO POR SOBRANTE</option><option value="110">110 | INGRESO POR TRANSFORMACION</option></select>
+                    <label class="mdl-textfield__label">Motivo</label>
+                    </div>
+            </div>
+
+            <div class="row">
+            <div class="col-md-6 col-xs-6">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: flex;">
+                        <label class="mdl-textfield__label">Referen. Proveedor :</label>
+                        <select class="mdl-textfield__input" id="doc_cpr" name="doc_cpr"><option value="S/N">S/N</option><option value="C01">C01</option><option value="C03">C03</option></select>
+                        <input class="mdl-textfield__input ali_c" type="text" name="ser_cpr" id="ser_cpr" readonly="" value="">
+                        <input class="mdl-textfield__input ali_c" type="text" name="nro_cpr" id="nro_cpr" readonly="" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Valor Compra :</label>
+                    <input class="mdl-textfield__input ali_r" type="text" name="val_afe" id="val_afe" readonly tabindex="-1" value="0.00">
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Total IGV :</label>
+                    <input class="mdl-textfield__input ali_r" type="text" name="igv_tot" id="igv_tot" readonly tabindex="-1" value="0.00">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2 col-xs-12 div_bord">
+            <div class="col-md-12 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select disabled="" name="est_reg" id="est_reg" class="mdl-textfield__input"><option value="">....</option><option value="A">Anulado</option><option value="I">Activo</option></select>
+                    <label class="mdl-textfield__label">Status</label>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-6">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label">Registro</label>
+                <input class="mdl-textfield__input ali_c" type="text" id="fec_reg" readonly tabindex="-1" value="">
+            </div>
+            </div>
+
+            <div class="col-md-12 col-xs-6">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label">Usuario</label>
+                <input class="mdl-textfield__input ali_c" type="text" id="use_nom" readonly tabindex="-1" value="">
+            </div>
+            </div>
+
+            <div class="row">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label">Total Compra :</label>
+                <input class="mdl-textfield__input ali_r col_total" type="text" readonly tabindex="-1" id="fac_tot" value="0.00">
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Tabla Detalle de Encabezado -->
+    <div id="render_sub_list">
+        <div class="panel">   
+            <table class="display dataTable" name="table1_a" id="table1_a" cellspacing="0" width="100%">
+            <thead></thead>
+            <tbody></tbody>
+            </table>                 
+        </div>         
+    </div>
+
+    <div style="display: none;">
+        <input type="text" size="3" name="doc_ing" id="doc_ing" readonly value="">
+        <input type="text" size="3" name="ser_ing" id="ser_ing" readonly value="">
+        <input type="text" size="6" name="nro_ing" id="nro_ing" readonly value="">
+
+        <input type="text" size="3" name="doc_ref" id="doc_ref" readonly value="">
+        <input type="text" size="3" name="ser_ref" id="ser_ref" readonly value="">
+        <input type="text" size="6" name="nro_ref" id="nro_ref" readonly value="">
+        <input type="text" size="2" name="ano_com" id="ano_com" readonly value="">
+        <input type="text" size="2" name="mes_com" id="mes_com" readonly value="">
+        <input type="text" size="2" name="tip_com" id="tip_com" readonly value="">
+
+
+        <input type="text" size="2" name="nro_com" id="nro_com" readonly value="">
+        <input type="text" size="2" name="est_ate" id="est_ate" readonly value="N">
+        <input type="text" size="2" name="tpe_ave" id="tpe_ave" readonly value="0.000">
+        <input type="text" size="2" name="pes_dev" id="pes_dev" readonly value="0.000">
+        <input type="text"          id="pes_sal" name="pes_sal" readonly value="0.000">   
+        <input type="text" size="4" id="jab_sal" name="jab_sal" readonly value="0">
+        <input type="text" id="pmu_tot" name="pmu_tot" size="4" readonly value="0.000">
+        <input type="text" id="pde_tot" name="pde_tot" size="4" readonly value="0.000">
+        <input type="text" id="pbe_tot" name="pbe_tot" size="4" readonly value="0.000">
+        <input type="text" id="tip_cam" name="tip_cam" size="3" readonly value="1.000">
+        <input type="text" name="ite_rec" id="ite_rec" size="6" readonly value="">
+    Tipo act:<input type="text" name="sw_y" id="sw_y" size="3" readonly="readonly" value="">   
+    </div>
+
+  </div>
+   
+ </div>
+
+</form>

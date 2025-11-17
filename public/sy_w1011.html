@@ -1,0 +1,210 @@
+<form name="encabez" id="encabez" method="POST" action="" style="width: 100%;  margin-left: -20px;">
+ <div id="" class="div_scrollable">
+
+    <div class="panel panel-default" id="render_cabecera">
+        <div class="panel-heading">
+          <div><span style="float:right"><b>&nbsp;</b></span><b></b></div>
+        </div>
+
+        <div class="col-md-4 col-xs-12">
+         <div id="render_cab">  
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label">User Name :</label>
+                        <input readonly="" class="mdl-textfield__input font-20-bold" type="text" id="use_nom" onkeyup="this.value=this.value.toLowerCase();" value="">
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Teléfono</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="phone" value="">
+                </div>
+                </div>
+            </div>       
+            <div class="row">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label">Email :</label>
+                        <input class="mdl-textfield__input" type="text" id="email" value="">
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-xs-10">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label">Bloqueo :</label>                    
+                        <span class="mdl-textfield__input" id="text_block"></span>                    
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label"></label>
+                        <input class="mdl-textfield__input" type="checkbox" id="blocked" value="" title="Bloquear Acceso">                    
+                    </div>
+                </div>           
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Ultimo Ingreso</label>
+                    <input class="mdl-textfield__input ali_c" type="text" readonly tabindex="-1" id="ultdate" value="">
+                </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Hora</label>
+                    <input class="mdl-textfield__input ali_c" type="text" readonly tabindex="-1" id="lastvisitdate" value="">
+                </div>
+                </div>            
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-6 col-xs-12">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <button type="Button" id="btn_setclave" class="btn btn-info" onclick="ue_SetClave();"><span class="glyphicon glyphicon-cloud"></span>  Inicializa Clave</button>
+            </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <button type="Button" id="btn_setclave" class="btn btn-danger" onclick="ue_Borrar();"><span class="glyphicon glyphicon-trash"></span>  Elimina Usuario</button>
+            </div>
+            </div>
+         </div>  
+                      
+        </div>
+
+        <div class="col-md-8 col-xs-12">
+            <div id="form_param" style="float:rigth">
+              <ul id="menu">
+              </ul>       
+            </div>    
+        </div>
+    </div>
+    
+
+   <div style="display: none;">
+    Tipo act:<input type="text" name="sw_y" id="sw_y" size="3" readonly value="M">
+     <input type="text" id="key_mox" size="3" readonly value="">
+    
+   </div>
+ </div>
+
+<script>
+
+function ue_remove_all(id_li){
+   $("[id^=sp-"+id_li+"]").each(function () {
+        $(this).html('[Sin Acceso]');
+   });
+   $('#li-'+id_li ).find('.body-container').each(function (i, val_i) {
+       $(val_i).find('input').each(function (j, val_j) {
+            if (j==0 || j==1 || j==2 ) {$(val_j).attr('checked', false).prop('checked', false); }
+            if (j==3) {$(val_j).val('');}
+        });
+      });
+}
+
+function ue_setparam() {
+  var cadena_name=[]
+  var cadena_param=[]
+  var cadena_gnr=[]
+  var use_nom=$('#use_nom').val();
+   $('#form_param .body-container').each(function (i, val_i) {
+       var input_value=$(val_i).find('input').val();
+       if (use_nam=='admin'){
+       var select_value=$(val_i).find('select').val();
+       if (select_value.length>0){
+         cadena_name.push(input_value);
+         cadena_param.push(select_value);
+        }
+       } else {
+         var file_t=''; var attr_t='S'; var attr_1='0'; var attr_2='0'; var attr_3='0'; var est_all='';
+         $(val_i).find('input').each(function (j, val_j) {
+            if (j==0) {attr_1=($(val_j).is(":checked"))? '1':'0'; }
+            if (j==1) {attr_2=($(val_j).is(":checked"))? '1':'0'; }
+            if (j==2) {attr_3=($(val_j).is(":checked"))? '1':'0'; }
+            if (j==3) {est_all=$(val_j).val();}
+            if (j==4) {file_t=$(val_j).val();}
+         });
+        if (attr_1 =='1'){
+          cadena_name.push(file_t);
+          attr_t=(attr_3 =='1')? 'E' : 'L' ;
+          cadena_param.push(attr_t + '|'+est_all);
+         }
+       }
+    });
+     var param_cab=generarParametroGeneral(cadena_name, cadena_param);
+     cadena_gnr.push(param_cab);
+
+  return cadena_gnr;
+}
+
+function ue_setmodulos() {
+  var cadena_str='';
+  var use_nom=$('#use_nom').val();
+  if (use_nom !='admin' && use_nom !='owner'){
+   var i;      var xcont;
+   xcont="6";
+   for (i=0;i<xcont;i++) {
+     if ($('#btn_std_'+ i).find('span').hasClass("glyphicon-remove") ) {
+        cadena_str += '0,';
+      } else {
+        cadena_str += '1,';
+      }
+   }
+   cadena_str +=  '0,';
+   $('#xtira').val(cadena_str);
+  }
+}
+
+function n_acc(formx) {
+  var s_mode=formx.name;  s_mode=s_mode.replace("_t","");
+  if (formx.checked == true)  {
+    document.getElementById(s_mode).value='S';
+   }
+  if (formx.checked == false) {
+    document.getElementById(s_mode).value='N';
+   }
+}
+
+function n_blks(form) {
+  if (form.checked == true)
+    {$('#blocked').val('Bloqueado');  }
+  if (form.checked == false)
+    {$('#blocked').val('Activo'); }
+}
+
+
+</script>
+
+
+<style>
+ 
+#menu * { list-style:none;}
+#menu li{ line-height:180%;}
+#menu li a{color:#222; text-decoration:none;}
+#menu li a:before{ content:"\025b8"; color:#ddd; margin-right:4px;}
+#menu input[name="list"] { 	position: absolute;	left: -1000em;}
+#menu label{ cursor: pointer;}
+#menu label:before{ content:"\025b8"; margin-right:4px;}
+#menu input:checked ~ label:before{ content:"\025be";}
+#menu .interior{display: none;}
+#menu input:checked ~ ul{display:block;}
+
+.card-container {
+    display: flex;
+    width: auto;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 1px 1px 4px 2px rgb(0 0 0 / 20%);
+    margin-bottom: 12px;
+}
+
+.form-control_t{ width: 100%;}
+
+.body-container div{ font-size: 12px; margin-bottom: 4px; height: 42px;  line-height: 1.5;  padding: 5px 5px 0px 5px;}
+.body-container span{ font-size: 12px; line-height: 1.4; margin-bottom: 2px; padding: 0px 0px 0px 5px; }
+.col_red{ color: #ff0000a1;}
+ 
+</style>
+
+</form>

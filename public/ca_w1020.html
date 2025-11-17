@@ -1,0 +1,167 @@
+ 
+<!-- 
+SELECT cod_cta, mnd_pag, fac_cal, use_nom, fec_nac, cod_afp, sis_afp, tip_ruc, cod_pai,  hor_reg, tip_imp
+FROM dba.ct3a03;
+-->
+
+<form name="encabez" id="encabez" method="POST" action="" style="width: 100%;  margin-left: -20px;">
+ <div id="" class="div_scrollable">
+
+    <div class="panel panel-default" id="render_cabecera">
+      <div class="panel-heading">
+          <div><span style="float:right"><b>&nbsp;</b></span><b></b></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 col-xs-12">
+            <div class="row">
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select disabled="" class="mdl-textfield__input" idx="tip_dcm">
+                        <option value="6">RUC</option><option value="1">DNI</option>
+                        <option value="0">Otros</option></select>
+                    <label class="mdl-textfield__label">Documento</label>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Código de Entidad</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="num_ruc" name="num_ruc" value="">
+                </div>
+                </div>
+
+                <div class="col-md-4 col-xs-6">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select class="mdl-textfield__input" id="tip_ent" name="tip_ent">
+                        <option value="C">Cliente</option><option value="P">Proveedor</option><option value="H">Choferes</option><option value="S">Inst. Pùblicas</option>
+                        <option value="R">Inst. Privadas</option><option value="O">Eventuales</option><option value="B">Banco</option><option value="E">Empresa</option>
+                        </select>
+                    <label class="mdl-textfield__label">Tipo de Entidad</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Razón Social</label>
+                    <input class="mdl-textfield__input ali_l" type="text" id="des_ent" name="des_ent" onkeyup="this.value=this.value.toUpperCase()" value="">
+                </div>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Dirección</label>
+                    <input class="mdl-textfield__input ali_l" type="text" id="dir_ent" name="dir_ent" value="">
+                </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Nombre Comercial</label>
+                    <input class="mdl-textfield__input ali_l" type="text" id="nom_com" name="nom_com" value="">
+                </div>
+                </div>
+
+                <div class="col-md-5 col-xs-12">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label d-flex">
+                    <label class="mdl-textfield__label">Ubi Geográfica</label>
+                    <input class="mdl-textfield__input" type="text" id="ubi_geo" name="ubi_geo" value="">
+                    <button type="button" id="btnUBIGEO" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+                </div>
+
+                <div class="col-md-6 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Telf</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="tel_uno" name="tel_uno" value="">
+                </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">mail</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="mai_to" name="mai_to" value="">
+                </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">WWW</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="pag_web" name="pag_web" value="">
+                </div>
+                </div>
+
+            </div>
+
+        </div>
+    
+        <div class="col-md-4 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select class="mdl-textfield__input">
+                        <option value="S">Sin Padrón</option><option value="P">Principal Contribuyente</option><option value="Q">Agente de Percepción</option><option value="R">Agente de Retención</option><option value="E">En Embargo</option><option value="N">No Habido</option><option value="X">Exon.Percepción</option></select>
+                    <label class="mdl-textfield__label">Padrón Sunat</label>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select class="mdl-textfield__input" id="cod_zon" name="cod_zon">
+                        <option value="0">S/N</option><option value="1">Z-RUBEN</option><option value="2">Z-NORTE</option><option value="3">Z-MAGDALENA</option><option value="4">Z-TABERNE</option><option value="5">Z-LA VICTORIA</option><option value="6">Z-EDWIN</option><option value="7">Z-RECUPERACION</option><option value="8">Z-PAVOS</option><option value="9">Z-SURQUILLO</option><option value="10">Z-COMAS</option><option value="11">Z-OFICINA</option><option value="14">Z-CANTO GRANDE</option><option value="15">ZONA SUR</option><option value="95">Z-CERDOS</option><option value="100">Z-POLLO BENEF</option><option value="102">Z-POLLO MUERTO-ENFERMO</option><option value="200">Z-BANCO</option><option value="201">Z-SALDO</option>
+                    </select>
+                    <label class="mdl-textfield__label">Zona</label>
+                    </div>
+                </div>
+                               
+  
+            <div class="col-md-12 col-xs-12">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <select name="est_reg" id="est_reg" class="mdl-textfield__input"><option value="">....</option><option value="A">Anulado</option><option selected="" value="I">Activo</option></select>
+                  <label class="mdl-textfield__label">Status</label>
+               </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                 <label class="mdl-textfield__label">Registro</label>
+                 <input class="mdl-textfield__input ali_c" type="text" id="fec_reg" readonly tabindex="-1" value="">
+                </div>
+            </div>            
+            <div class="col-md-12 col-xs-12">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label class="mdl-textfield__label">Hora</label>
+                  <input class="mdl-textfield__input ali_c" type="text" id="hor_reg" readonly tabindex="-1" value="">
+               </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label class="mdl-textfield__label">Usuario</label>
+                  <input class="mdl-textfield__input ali_c" type="text" id="use_nom" readonly tabindex="-1" value="">
+               </div>
+            </div>            
+          
+
+
+                    <div class="col-md-12 col-xs-12">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <button type="button" id="btnCTABCO" size="5" class="btn btn-danger btn-sm" title="Registro de Cuentas de Banco"><span class="glyphicon glyphicon-cloud"></span> Ctas. Banco</button>
+                    </div>
+                    </div>
+                 
+        </div>
+      </div>
+    </div>
+
+ <div style="display:none"><button type="button" id="btnValidaRUC" disabled class="btn btn-warning btn-sm" title="Valida DNI en Reniec">
+    <span class="glyphicon  glyphicon-cog"></span>  Valida</button>
+ </div>
+  <ul id="menuCapa" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+     <table class="table-bordered"><tbody><tr><th class="texto_formulario ali_r">POLLOS CARNE:</th><td><input class="form-controlx ali_r" type="text" size="6" name="tar_0" id="tar_0" onfocus="return this.select();" onkeypress="EvaluateText('%f', this);" onblur="this.value =NumberFormat(this.value, '2', '.', ',');" value="0.00"></td></tr><tr><th class="texto_formulario ali_r">PAVOS:</th><td><input class="form-controlx ali_r" type="text" size="6" name="tar_1" id="tar_1" onfocus="return this.select();" onkeypress="EvaluateText('%f', this);" onblur="this.value =NumberFormat(this.value, '2', '.', ',');" value="0.00"></td></tr><tr><th class="texto_formulario ali_r">POLLO ABIERTO:</th><td><input class="form-controlx ali_r" type="text" size="6" name="tar_2" id="tar_2" onfocus="return this.select();" onkeypress="EvaluateText('%f', this);" onblur="this.value =NumberFormat(this.value, '2', '.', ',');" value="0.00"></td></tr><tr><th class="texto_formulario ali_r">POLLO DESCARTE:</th><td><input class="form-controlx ali_r" type="text" size="6" name="tar_3" id="tar_3" onfocus="return this.select();" onkeypress="EvaluateText('%f', this);" onblur="this.value =NumberFormat(this.value, '2', '.', ',');" value="0.00"></td></tr><tr><th class="texto_formulario ali_r">POLLO CERRADO:</th><td><input class="form-controlx ali_r" type="text" size="6" name="tar_4" id="tar_4" onfocus="return this.select();" onkeypress="EvaluateText('%f', this);" onblur="this.value =NumberFormat(this.value, '2', '.', ',');" value="0.00"></td></tr></tbody></table>
+  </ul>
+    
+
+   <div style="display: none;">
+    Tipo act:<input type="text" name="sw_y" id="sw_y" size="3" readonly="" value="M">
+   </div>
+ </div>
+
+</form>

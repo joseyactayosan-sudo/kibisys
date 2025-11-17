@@ -1,0 +1,105 @@
+
+<form name="encabez" id="encabez" method="POST" action="" style="width: 100%;  margin-left: -20px;">
+   <div id="" class="div_scrollable">
+
+      <div class="panel panel-default" id="render_cabecera">
+         <div class="panel-heading">
+           <div><span style="float:right"><b></b></span><b><span id="reg_com"></span></b></div>
+         </div>
+  
+         <div class="row">
+            <div class="col-md-6 col-xs-12">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label class="mdl-textfield__label">Código :</label>
+                  <input class="mdl-textfield__input" type="text" id="cod_art" name="cod_art" readonly value="">                   
+               </div>
+            </div>             
+            <div class="col-md-6 col-xs-12">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label class="mdl-textfield__label">Código de Barras :</label>
+                  <input class="mdl-textfield__input" type="text" id="cod_bar" name="cod_bar" value="">                   
+               </div>
+            </div>      
+         </div>            
+
+         <div class="row">
+           <div class="col-md-12 col-xs-12">
+             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label class="mdl-textfield__label">Descripción :</label>
+                <input class="mdl-textfield__input" type="text" id="des_art" name="des_art" value="" onkeyup="this.value=this.value.toUpperCase()">
+             </div>
+            </div> 
+         </div>                          
+
+         <div class="row">
+            <div class="col-md-12 col-xs-12">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label d-flex">
+               <label class="mdl-textfield__label">Clasificación :</label>
+               <textarea class="mdl-textfield__input" id="key_fam_ref" readonly rows="2" cols="80"></textarea>                              
+               <input class="d-none" type="text" id="key_fam" name="key_fam" value="" readonly>               
+               <button type="button" id="btnBuscarCLA" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-search"></span></button>                    
+              </div>
+            </div>  
+         </div> 
+
+         <div class="row">
+            <div class="col-md-4 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                     <select name="und_vta" id="und_vta" class="mdl-textfield__input">
+                             <option value="X">Seleccione</option>
+                             <option value="NIU">NIU</option></select>
+                    <label class="mdl-textfield__label">Und Venta :</label>
+                </div>
+            </div> 
+            <div class="col-md-4 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                     <select name="mnd_vta" id="mnd_vta" class="mdl-textfield__input">
+                             <option value="S/.">S/.</option>
+                             <option value="US$">US$</option></select>
+                    <label class="mdl-textfield__label">Moneda Venta :</label>
+                </div>
+            </div>              
+            <div class="col-md-4 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="mdl-textfield__label">Impuesto :</label>
+                    <input class="mdl-textfield__input ali_c" type="text" id="tip_imp" readonly value="">
+                </div>
+             </div>
+            </div>  
+
+         <div class="row"> 
+            <div class="col-md-3 col-xs-6">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <select name="est_reg" id="est_reg" class="mdl-textfield__input"><option value="">....</option><option value="A">Anulado</option><option selected="" value="I">Activo</option></select>
+                  <label class="mdl-textfield__label">Status</label>
+               </div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                 <label class="mdl-textfield__label">Registro</label>
+                 <input class="mdl-textfield__input ali_c" type="text" id="fec_reg" readonly tabindex="-1" value="">
+                </div>
+            </div>            
+            <div class="col-md-3 col-xs-6">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label class="mdl-textfield__label">Hora</label>
+                  <input class="mdl-textfield__input ali_c" type="text" id="hor_reg" readonly tabindex="-1" value="">
+               </div>
+            </div>
+            <div class="col-md-3 col-xs-6">
+               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label class="mdl-textfield__label">Usuario</label>
+                  <input class="mdl-textfield__input ali_c" type="text" id="use_nom" readonly tabindex="-1" value="">
+               </div>
+            </div>            
+         </div>
+
+      <div style="display: none;">
+         Tipo act:<input type="text" name="sw_y" id="sw_y" size="3" readonly="" value="">
+      </div>
+
+  </div>
+ </div>
+
+
+</form>
