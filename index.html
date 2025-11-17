@@ -2,201 +2,223 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.css">   
+  <meta name="viewport" content="width=device-width, initial-scale=1" />  
+  <title>KibiSys</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <!-- Bootstrap CSS   -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">       
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css">
+
+  <link rel="stylesheet" href="./css/default.css">
 
     <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js"></script>
-
+ 
 </head>
-  <style>
-    body {
-      height: 100vh;
-    }
-
-    #content {
-      padding: 20px;
-    }
-    #loginContainer {     
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #e8fff0e6;    
-    }
-.container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-   .ali_c {text-align:center;}
-
-   .spinner {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5em;
-    color: #333;
-   }
-
-        .password-container {
-            position: relative;
-            width: 300px;
-        }
-
-        .password-container input {
-            padding: 10px;
-        }
-
-        .password-container .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #555;
-        }
-
-.mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
-.mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
-    font-size: 14px;
-}
-
-.i-account{ font-size: 80px;}
-@media screen and (max-width:630px) {
-  .text-condensedLight, .mdl-textfield__input, .mdl-textfield__label { font-size: 18px;}
-}
-
-#render_filtro > div{display: flex;}
-
-@media (min-width: 1200px) {
-    .container {        max-width: 1140px;    }
-}
-@media (min-width: 992px) {
-    .container {        max-width: 960px;    }
-}
-@media (min-width: 768px) {
-    .container {        max-width: 720px;    }
-}
-@media (min-width: 576px) {
-    .container {        max-width: 540px;    }
-}
-
-
-.p-4 {
-    padding: 1.5rem !important;
-}
-.card {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-}
-
-</style>
-
 <body>
-
-<!--  <h2>Iniciar sesión</h2>-->
-  <form action="/auth/login" method="post">
-
     <div id="spinner" class="spinner" style="display: none; z-index: 99999;">
         <i class="fas fa-spinner fa-spin"></i> Cargando...
     </div>
-  <!-- Login Modal -->
-  <div class="container" id="loginContainer">
-    <div class="card p-4" style="width: 300px;">
-		<p class="i-account ali_c"><i class="zmdi zmdi-account-circle"></i></p>
-    <h4 class="ali_c">Iniciar Sesión</h4>
 
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label password-container">
-	 			  <input class="mdl-textfield__input" type="text" id="username" name="username" value="" />
-			    <label class="mdl-textfield__label">Usuario</label>
-			</div>
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label password-container">
-			    <input class="mdl-textfield__input" type="password" id="password" name="password" value="" />
-			    <label class="mdl-textfield__label">Clave</label>
-          <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
-			</div>
+   <!-- Página principal con Sidebar y contenido -->
+   <div id="mainContainer" class="wrapper d-flex align-items-stretch">
+    <!-- Barra Lateral  -->
+  	<nav id="sidebar">
+		  <div class="p-1 pt-5">
+	  		 <a href="#" class="img logo rounded-circle mb-3" style="background-image: url(./logo.jpg);"></a>
+	       <ul class="list-unstyled components mb-5" id="sidebar-menu">
+	       </ul>
 
-			<button id="loginBtn" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">
-				Aceptar <i class="zmdi zmdi-mail-send"></i>
-			</button>
-      <div id="loginError" class="text-danger mt-2" style="display:none;">Error en usuario o contraseña</div>
+	       <div class="footer">
+	        	<p><i class="icon-heart" aria-hidden="true"></i> by <a href="#" target="_blank"></a></p>
+	       </div>
+	    </div>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5">
+      <!-- Barra Principal  -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-lightx" style="background: -webkit-gradient(linear, 80% 20%, 12% 21%, from(#9b9a9a), to(#d1cece)) !important;">
+        <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                    <i class="fa fa-bars"></i><span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" 
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation"><i class="fa fa-bars"></i>
+            </button>
+
+            <div class="navbar-collapse" id="navbarSupportedContent">
+             <div class="col-form-label-lg alert-link" id="titulo_menu"></div>              
+              <div class="navbar-collapse">                           
+                <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
+                <li class="nav-item"><button type="button" id="set_users" file_name="sy_w1011" class="btn btn-link">
+                                          <i class="fa-2x fa-solid fa-user"></i>
+                                        </button>                
+                <li class="nav-item"><button type="button" id="logout" class="btn btn-link">
+                                          <i class="fa-2x fa-solid fa-power-off"></i></button>
+                </li>               
+                </ul>
+             </div>
+            </div>
+
+        </div>
+      </nav>
+      <!-- Contenedor -->
+      <div id="body_content" class="hidden p-4 p-md-5">
+        <!-- Barra de Opciones  -->    
+        <div id="render_barra" class="collapse navbar-collapse">
+          <div id="titulo_opcion" class="col-form-label-lg text-white list-inline-item"></div>
+              <ul class="nav navbar-nav ml-auto" style="display: flow; float:right">
+                <li class="nav-item"><button type="button" id="g_Nuevo" class="btn btn-link"> 
+                                          <i class="fa-2x fa-solid fa-sheet-plastic fa-fw"></i></button></li>
+                <li class="nav-item"><button type="button" id="g_Insertar" class="btn btn-link"> 
+                                          <i class="fa-2x fa-solid fa-list-ol fa-fw"></i></button></li>
+                <li class="nav-item"><button type="button" id="g_Most" class="btn btn-link">
+                                          <i class="fa-2x fa-solid fa-magnifying-glass fa-fw"></i></button></li>
+                <li class="nav-item"><button type="button" id="g_Cancelar" class="btn btn-link"> 
+                                          <i class="fa-2x fa-solid fa-ban fa-fw"></i></button></li>
+                <li class="nav-item"><button type="button" id="g_Modify" class="btn btn-link"> 
+                                          <i class="fa-2x fa-solid fa-floppy-disk fa-fw"></i></button></li>
+                <li class="nav-item"><button type="button" id="g_Modifica" class="btn btn-link">
+                                          <i class="fa-2x fa-solid fa-file-pen fa-fw"></i></button></li>                                          
+                <li class="nav-item"><button type="button" id="g_print" class="btn btn-link"> 
+                                          <i class="fa-2x fa-solid fa-print fa-fw"></i></button></li>
+                <li class="nav-item"><button type="button" id="g_pdf" class="btn btn-link"> 
+                                          <i class="fa-2x fa-solid fa-file-pdf fa-fw"></i></button></li> 
+                <li class="nav-item"><button type="button" id="g_excel" class="btn btn-link">
+                                          <i class="fa-2x fa-solid fa-file-excel fa-fw"></i></button></li>   
+                <li class="nav-item"><button type="button" id="g_excel" class="btn btn-link"> 
+                                          <i class="fa-2x fa-solid fa-share-from-square fa-fw"></i></button></li>
+                                          
+              </ul>
+        </div>
+       <!-- modal mensajes -->
+        <div id="mensaje" class="" style="display:none">
+            <div class="alert alert-success" role="alert" style="display:none">
+            <h4 class="titulo"></h4>
+            <h5 class="mensaje"></h5>
+            <h5 class="detalle"></h5>
+            </div>
+            <div class="alert alert-info" role="alert" style="display:none">
+            <h4 class="titulo"></h4>
+            <h5 class="mensaje"></h5>
+            <h5 class="detalle"></h5>
+            </div>
+            <div class="alert alert-warning" role="alert" style="display:none">
+            <h4 class="titulo"></h4>
+            <h5 class="mensaje"></h5>
+            <h5 class="detalle"></h5>
+            </div>
+            <div class="alert alert-danger" role="alert" style="display:none">
+            <h4 class="titulo"></h4>
+            <h5 class="mensaje"></h5>
+            <h5 class="detalle"></h5>
+            </div>
+        </div>
+        <!-- body -->
+        <div  id="render_body" class="row">
+          <!-- mask loader -->
+          <div class="mask" style="display: none;">
+                    <div id="loader" style="display: none;"></div>
+          </div>       
+
+          <!-- Menu select -->
+          <div id="render_select" class="row">
+              <!-- barra de filtro-->
+              <div id="render_filtro" class="row">                
+                 <div class="panel panel-default">
+                  <div class="panel-body container_p"></div>
+                 </div>
+              </div>
+              <!-- Tabla select-->
+              <div class="panel panel-default">   
+                  <table class="display dataTable" name="table1" id="table1" cellspacing="0" width="100%">
+                    <thead></thead>
+                    <tbody></tbody>
+                  </table>                 
+              </div> 
+          </div>                                                 
+          
+          <!-- Formulario -->
+          <div class="row" id="render_form"  style="display: none;">  
+              <!-- modal ayuda -->                
+              <div class=" modal fade fixed-help" id="modal_ayuda"  tabindex="-1" role="dialog" aria-labelledby="modal_ayudalLabel">
+                    <div class="modal-dialog-ayuda" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="modal_ayudalLabel">Ayuda</h4>
+                            </div>
+
+                            <div class="modal-body">
+                              <iframe id="iframe_ayuda" name="iframe_ayuda" src="" style="zoom:0.60" width="99.6%" height="350" frameborder="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+              </div> 
+                      
+            <!-- Modal para detalle -->
+            <div class="modal fade" id="modalDetalle" tabindex="-1" role="dialog" aria-labelledby="modalDetalleLabel" style="top: -20px;">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="modalDetalleLabel">Detalle del Registro</h5>
+                  </div>
+                  <div class="modal-msg"> <!-- MODAL_CONTENT --> </div>  
+                  <div id="modal-body" class=""></div>
+                  <div class="modal-footer">
+                    <button type="button"  class="btn btn-warning" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>  Salir</button>
+                    <button Type="Button"  id="btn_borrar"   class="btn btn-danger"  onClick="ue_Borrar();"><span class="glyphicon glyphicon-trash"></span>  Borrar</button>
+                    <button Type="Button"  id="btn_cancelar" class="btn btn-info"    onClick="f_Cancela();"><span class="glyphicon glyphicon-refresh"></span> Cancelar</button>
+                    <button type="button"  id="btn-guardar"  class="btn btn-primary" onClick="f_Aceptar();"><span class="glyphicon  glyphicon-floppy-disk"></span>  Guardar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div>
-	</div> 
-  </form>
 
-  <script>
-    $(function() {
-      const urlParams = new URLSearchParams(window.location.search);    
-      if(urlParams.get('error')) {
-        $('#loginError').text('Usuario o contraseña incorrectos');
-      }
-    });
-  </script>
+  </div>
 
-  <script>
- $(document).ready(function() {
-   $(document).on('click','input',function(){ $(this).select(); });
-   $('#username').focus().select();
+  <!-- Bootstrap JS  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>    
 
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    
-    usernameInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' || event.keyCode === 13) {
-            event.preventDefault(); 
-            passwordInput.select();
-        }
-    });
+  <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.0.3/numeral.min.js"></script>
 
-        const togglePassword = document.getElementById('togglePassword');
-       
+ <script>  
+  (function($) {                 
+	"use strict";
+	var fullHeight = function() {
+		$('.js-fullheight').css('height', $(window).height());
+		$(window).resize(function(){
+			$('.js-fullheight').css('height', $(window).height());
+		});
+	};
+	fullHeight();
 
-        togglePassword.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-
-            // Cambiar el ícono según el estado
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-           
-      // Manejar login
-      $('#loginBtn').click(function() {
-        const spinner = $('#spinner');
-        const usuario = $('#username').val();
-        const contrasena = $('#password').val();
-
-        // Validar campos
-        if (!usuario || !contrasena) {
-          $('#loginError').text('Por favor, complete todos los campos').show();
-          return;
-        }
-        spinner.show();
-                  
-      });
-
-
-    });
+  $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+  });
+})(jQuery);
 </script>
+
+<script src="./js/main.js"></script>
 </body>
 </html>
