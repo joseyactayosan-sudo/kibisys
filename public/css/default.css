@@ -1,1 +1,184 @@
-x
+ nav {padding: 20px;}
+.dropdown-toggle::after {
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+.p-md-5{padding: 0em !important;}
+.navbar { margin-bottom: 0px !important; padding: 2px 4px !important;}
+
+#render_barra {background: -webkit-gradient(linear, 0% 100%, 0% 64%, from(#de5858), to(#da6f2f));}
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-top: 0px !important;
+}
+ 
+    body {
+      height: 100vh;
+    }
+    #sidebar {
+      min-width: 200px;
+      max-width: 200px;
+      /* height: 100vh; */
+    }
+    #content {
+      padding: 20px;
+    }
+
+   .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: #333;
+    }
+ 
+  .form-control_t {
+    height: 30px;
+    padding: 2px 2px;
+    line-height: 24px;
+    font-size: 14px;
+    color: rgb(32, 33, 36);
+    vertical-align: middle;
+    background-image: none;
+    border-radius: 10px;
+    outline: none;
+    padding-inline-end: 8px;
+    padding-inline-start: 8px;
+    padding-left: 8px;
+    border: 1px solid #89ca42;
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label, 
+.mdl-textfield--floating-label.is-dirty .mdl-textfield__label, 
+.mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
+    font-size: 14px;
+}
+ 
+
+#render_filtro {width: 100%;}
+#render_filtro > div > div > div {display: flex;}
+#render_filtro > div > div > div > span{padding-right: 6px;}
+#serlca{margin-left: 12px;}   
+
+@media screen and (max-width:630px) {
+  .text-condensedLight, .mdl-textfield__input, .mdl-textfield__label { font-size: 18px;}
+}
+ 
+ 
+#render_body {
+    display: block;
+    width: 100%;
+    padding-bottom: 100px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.panel {
+    width: 100%;
+}
+
+.panel-default {
+    border-color:#ddd;
+    margin: 2px 20px 4px 20px;
+}
+.panel-body {
+  margin-top: 6px;
+  padding: 6px;
+} 
+
+.ali_c {text-align:center;}
+.ali_l {text-align:left;}
+.ali_r {text-align:right;}
+.ali_h {display :none;}
+
+caption  { font-size: 20px; padding: 2px 35px;}
+
+table.display thead tr th, table.display tfoot tr th { font-size: 13px; padding: 6px 2px; color: #000000;}
+table.display tbody tr td {  padding: 0px 2px; font-size: 12px; color: #000000;}
+
+/* table.dataTable thead td{    padding: 0px 3px !important;} */
+
+table.display tbody tr:nth-child(even):hover td{  background-color: #d0e2f1 !important; font-weight: bold;}
+table.display tbody tr:nth-child(odd):hover td {  background-color: #d0e2f1 !important; font-weight: bold;}
+table.display thead tr, table.display tfoot tr {  background-color: #e5e5e5!important; height:35px;}
+table.display tbody tr td.editar_fila {  background-color: transparent !important;}
+
+.dataTables_info { font-size: 10px;  text-align: left;}
+.paginate_button {
+    padding: 3px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    border-radius: 3px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background: linear-gradient(to bottom, #edf6fe 0%, #428bca 100%)  !important;
+ }
+
+#table1_filter label input, .format_ms{
+    padding: 2px 2px;
+    line-height: 24px;
+    font-size: 12px;
+    vertical-align: middle;
+    border-radius: 6px;
+    outline: none;
+    padding-inline-end: 8px;
+    padding-inline-start: 8px;
+    padding-left: 8px;
+}
+.dataTables_length{
+  font-size: 9px;
+  display: contents;
+}
+.dataTables_filter{
+  font-size: 12px;
+  display: flex;
+  float: right;
+}
+table.dataTable thead th{
+    text-align: center;
+}  
+
+.mdl-textfield {
+    width: 100%;
+    padding: 14px 0; 
+}
+.mdl-textfield__label {
+    font-size: 14px;
+    color: rgb(3 109 157 / 93%);
+    top: 0px;   
+}
+
+.mdl-textfield__input {
+    font-size: 14px;
+    color: #0e0c0c;
+}
+
+#mensaje {
+  padding: 0px 22px 0px 22px;    
+}
+.alert{
+
+  padding: 0px 2px 0px 12px;
+}
+.fixed-help {
+    position: fixed;
+    top: 54px;
+    right: 0;
+   /* left: 308px;*/
+    z-index: 1060;
+   /* width: 45%;*/
+ } 
+ .div_bord{
+    border: 1px solid rgb(120 128 120);
+    border-radius: 6px;  
+ }
+.font-20-bold{  font-size: 20px; font-weight: bold;}
+ 
+ 
