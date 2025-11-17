@@ -1,8 +1,9 @@
-var al_w1011 = {
+var ca_w1020 = {
     f_get_head : async function() {  
-      await ui_inicializar_barra_filtro();
-      //this.f_modifica_filtro();     
-      const array_headers= await this.f_genera_headers();
+      await ui_inicializar_barra_filtro();      
+      await this.f_modifica_filtro();     
+      const array_headers= await f_genera_headers();
+      $('#fec_ini').val(''); 
       return array_headers; 
     },
 
@@ -17,126 +18,11 @@ var al_w1011 = {
       return TIPO_MSG_OK;
     },
 
-    f_mostrar : async function() {
-      f_ui_inicializar_div_mensaje();
-      let msg=''; let sw_1=0;
-      const filename= $('#body_content').attr('file_name');
-      
-      const param_anio=$('#param_anio').val();
-      const param_mess=$('#param_mess').val();
-      const serlca    =$('#serlca').val();
-
-      if (filename.length==0){sw_1++; msg='Se ha producido un erro de asignación, consultar al proveedor del sistema';}
-      if (param_anio.length==0 || param_mess.length==0){sw_1++; msg='Escojer un Año y Mes a Buscar';}
-      if (sw_1>0){
-        f_ui_mostrar_div_mensaje(TIPO_MSG_ERROR, msg);
-        f_ui_hideLoading();
-        return false;
-      } else {             
-          const url='/api/select_gGeneral';
-          var parametros = {"opcion": filename, "param_find" : param_anio + '|' +  param_mess + '|' + serlca } ;    
-          const dataJSON = await $.ajax({
-                              data:  parametros,
-                              url : url,
-                              type: 'GET',
-                              contentType: "application/json",
-                              dataType: "json",
-                              error: function(jqXHR, textStatus, errorThrown) {
-                                    console.log('error', errorThrown);
-                              }
-                            });
-         this.f_retrieve(dataJSON);
-       }
-    },
-
-    get_values : async function () {
-          const filename= $('#body_content').attr('file_name');
-          const url='/api/genera_field_sql';
-          var parametros = {"opcion": filename};    
-
-          const array_field = await $.ajax({
-                              data:  parametros,
-                              url : url,
-                              type: 'GET',
-                              contentType: "application/json",
-                              dataType: "json",
-                              error: function(jqXHR, textStatus, errorThrown) {
-                                    console.log('error', errorThrown);
-                              }
-                            });  
-          return  array_field;               
-    },
-
-    f_genera_headers : async function() {
-      try {        
-          array_field=  await this.get_values();
-
-          let co_nome=array_field.array_header.colname;
-          let headersx=array_field.array_header.headers;
-          let headwidx=array_field.array_header.headwid;
-          let colsusx = array_field.array_header.colsus;
-          let colpatx = array_field.array_header.colpat;
-          const id_row=true;
-          const id_btn=true; 
-          const array_suma = headwidx.reduce((acumulador,  valorActual ) => acumulador + parseInt(valorActual.replace("%","")), 0);
-          let  heaid = 100 - array_suma;    heaid =(id_btn)? (heaid /2) : heaid;
-
-          if (id_row){ co_nome.unshift('id_ite');}
-          if (id_btn){ co_nome.push('id_btn'); }
-
-          if (id_row){ headersx.unshift('Id');}
-          if (id_btn){ headersx.push('...'); }
-
-          if (id_row){ headwidx.unshift(heaid);}
-          if (id_btn){ headwidx.push(heaid);}
-
-          if (id_row){ colsusx.unshift( 'c');}
-          if (id_btn){ colsusx.push( 'c'); }
-
-          if (id_row){ colpatx.unshift( 'x');}
-          if (id_btn){ colpatx.push('x'); }
-
-
-          const result_colname= co_nome;  
-          const result_head   = headersx; 
-          const result_headwid= headwidx; 
-          const result_colsus = colsusx;  
-          const result_format = colpatx;  
-
-        let head_t='<tr role="row">'; 
-          result_headwid.forEach(function (valuey, k , array) {
-            head_t +='<th class="ali_' + result_colsus[k] + '">' + result_head[k] + '</th>';    
-          });
-
-        head_t +='</tr>';
-        const retorno_var={result_colname : result_colname, result_headwid:result_headwid, result_colsus:result_colsus, result_format:result_format, head_t:head_t}
-        return retorno_var; 
-      } catch (error) {
-        console.error("Error f_genera_headers:", error);
-      }  
-    },
-
-    f_modifica_filtro : function(){  
-
-      $('.container_p div').each(function(key, value) {         
-        if (key<2 || key==3){ $(this).addClass('hidden');}    
-        if (key==2){ 
-              $(this).removeClass('col-md-2').addClass('col-md-8').attr('style','');  
-              $(this).find('span').html('Buscar por RUC o Razón Social :');
-         }  
-      });
-      $('#ch_0').hide(); 
-      $('#fec_ini').attr('type','text').attr("onkeyup","this.value=this.value.toUpperCase()").val(''); 
-      console.log('f_modifica_filtro',   $('#fec_ini').val() );
-    },
-
     f_retrieve : async function (dataJSON) {    
-  
-    const array_headers= await this.f_genera_headers(); 
-    console.log('f_retrieve', array_headers);
-    
+      const array_headers= await f_genera_headers(); 
+
     let result_colname= array_headers.result_colname;
-    //let result_head   = array_headers.result_head;
+   // let result_head   = array_headers.result_head;
     let result_headwid= array_headers.result_headwid;
     let result_colsus = array_headers.result_colsus;
     let result_format = array_headers.result_format;
@@ -145,14 +31,14 @@ const titulo_1='Consulta';
 const titulo_2='';
 const titulo_3='';
 const cols_sumary   =[];
-const sumas_col = [5,6];
+const sumas_col = [];
 
 cols_sumary.map( item => {  sumas_col.push(result_colname.indexOf(item));   });
 
   let btn_retrieve='1';
   let btn_ok=(typeof btn_retrieve=== 'undefined' || btn_retrieve[0]=='0')? '0' :'1';
 
-  let page_ln=(btn_ok== '0')? 16 : 10;
+  let page_ln=(btn_ok== '0')? 16 : 12;
   //var xapi;
   var pageTotal =0;
 
@@ -161,7 +47,7 @@ cols_sumary.map( item => {  sumas_col.push(result_colname.indexOf(item));   });
     switch (k) {
         default: valox = { "data": null,  "mRender":   (data, type, value) => {
                          if (btn_ok=='1' && k==(result_headwid.length - 1)){
-               data_result= '<button type="button" class="btn btn-link btn-sm" onclick="f_detalle(this)"><span class="glyphicon glyphicon-check"></span></button>';
+        data_result= '<button type="button" class="btn btn-link btn-sm" onclick="ret_detalle(this)"><span class="glyphicon glyphicon-check"></span></button>';                            
                           } else {
                             data_result=value[result_colname[k]];
                             for_m=result_format[k];
@@ -173,21 +59,20 @@ cols_sumary.map( item => {  sumas_col.push(result_colname.indexOf(item));   });
       xaoColumnDefs.push(valox);
   });
 
- // console.log('estruc ', xaoColumnDefs);
-    if ($('#table1 tfoot')) {    
-      $('#table1 tfoot').remove();
-    }
-
+        if ($('#table1 tfoot')) {    
+            $('#table1 tfoot').remove();
+        }
+ 
     $("#table1").append( $('<tfoot/>').append( $("#table1 thead tr").clone() ) );
     $('#table1 tfoot tr:first').each(function () {
         $(this).find("th").each(function (j, val_j) {
              $(val_j).html('');
          });
     });
-
+     
     $('#table1').DataTable({
         "dom"       : 'Bfrtip',
-     //   "lengthMenu": [ page_ln ],
+ //       "lengthMenu": [ page_ln ],
         "destroy"   : true ,
         "data"      : dataJSON,
         "columns"   :  xaoColumnDefs ,
@@ -248,56 +133,84 @@ cols_sumary.map( item => {  sumas_col.push(result_colname.indexOf(item));   });
       
 ////////////////////////////////////////////////////////////////////////////////
     },
-        
-    ret_detalle : async function  (xthis) {   
-      f_ui_inicializar_div_mensaje_modal();   
-        var row_id =  await $(xthis).closest('tr');
-        var tabla = await  $('#table1').DataTable();
-        var set_row = await  tabla.row(row_id).data();    
-        var key_com = await  set_row.key_com; 
+   
+    f_ui_inicializarFormulario : function () {     
 
-          const filename= await $('#body_content').attr('file_name');                  
-          const url='/api/get_detalle';
-          var parametros = {"opcion": filename, "key_unica":key_com};    
-console.log('ca_w1020.js envia a api',parametros); 
-          const json_detalle = await $.ajax({
-                              data:  parametros,
-                              url : url,
-                              type: 'GET',
-                              contentType: "application/json",
-                              dataType: "json",
-                              error: function(jqXHR, textStatus, errorThrown) {
-                                    console.log('error', errorThrown);
-                              }
-                            }); 
-        filed_origen=json_detalle;
-console.log('ca_w1020.js recibe data de api',parametros);         
-        const values_data=(json_detalle.rows_data)[0];
-        //const key_fam_ref=(json_detalle.key_ref)[0];
-        //
-            // Rellenar el formulario  mejorar para buscar dentro de un determinado div
-            for (var key in values_data) {                  
-                if (values_data.hasOwnProperty(key)) {
-                   var value = values_data[key];
-                  // 1. Verificar si el campo es la fecha que quieres formatear (fec_reg)
-                  // O podrías verificar si el valor tiene el formato ISO 8601 (contiene 'T')
-                    if (( key === 'fec_cpr' || key === 'fec_rec' || key === 'fec_ven'  || key === 'fec_pag' || key === 'fec_reg' ) && typeof value === 'string' && value.includes('T')) {
-                        // Si es la fecha y es una cadena ISO 8601, extrae solo la parte de la fecha
-                        value = value.substring(0, 10); // Toma los primeros 10 caracteres: "YYYY-MM-DD"
-                    }
-                  // 2. Asignar el valor (modificado o original) al input
-                    $('#' + key).val(value);                    
-                }
-            }
-          
-          $('#modalDetalleLabel').text('Registro de Comprobantes').append('<div style="margin-top: -30px;padding-left: 300px;"><span style="font-size: 16px;">Registro Contable :</span><span id="reg_com" style="font-size: 16px; padding-left: 6px;"></span></div>');
-          $('#reg_com').text(key_com);
-          $('#sw_y').val('M');
-          $('#render_form').show();
-          $('#modalDetalle').modal('show'); 
-          this.f_ui_inicializarFormulario();    
     },
-/// nuevos
+
+    f_modifica_filtro : function(){  
+
+      $('.container_p div').each(function(key, value) {         
+        if (key<2 || key==3){ $(this).addClass('hidden');}    
+        if (key==2){ 
+              $(this).removeClass('col-md-2').addClass('col-md-8').attr('style','');  
+              $(this).find('span').html('Buscar por RUC o Razón Social :');
+         }  
+      });
+      $('#ch_0').hide(); 
+      $('#fec_ini').attr('type','text').attr("onkeyup","this.value=this.value.toUpperCase()").val('').focus(); 
+    },
+
+    ret_detalle_ini : async function  (xthis) {   
+      f_ui_inicializar_div_mensaje_modal();   
+      try {
+            var row_id  = await $(xthis).closest('tr');
+            var tabla   = await  $('#table1').DataTable();
+            var set_row = await  tabla.row(row_id).data();    
+            var num_ruc = await  set_row.num_ruc; 
+            if ( num_ruc.length==0 || parseInt(num_ruc) == 0) {    
+                throw new Error('La clave de busqueda no exite o no esta definida');        
+            }            
+            return  {ok:true, key_find:num_ruc}
+          } catch (error) {
+            console.error("Error", error);
+            return  {ok:false, message:error}
+          }        
+    },
+    
+    f_setvalues_head : async function  (num_ruc, filename){
+      try {     
+            const url='/api/get_detalle';
+            var parametros = {"opcion": filename, "key_unica":num_ruc};     
+            const json_detalle = await $.ajax({
+                                  data:  parametros,
+                                  url : url,
+                                  type: 'GET',
+                                  contentType: "application/json",
+                                  dataType: "json",
+                                  error: function(jqXHR, textStatus, errorThrown) {
+                                        console.log('error', errorThrown);
+                                  }
+                                }); 
+
+            filed_origen=json_detalle;       
+            const values_data=(json_detalle.rows_data)[0];
+            //const key_fam_ref=(json_detalle.key_ref)[0];
+              // Rellenar el formulario  mejorar para buscar dentro de un determinado div
+            for (var key in values_data) {                  
+                    if (values_data.hasOwnProperty(key)) {
+                      var value = values_data[key];
+                      // 1. Verificar si el campo es la fecha que quieres formatear (fec_reg)
+                      // O podrías verificar si el valor tiene el formato ISO 8601 (contiene 'T')
+                        if (( key === 'fec_ing' || key === 'fec_reg' ) && typeof value === 'string' && value.includes('T')) {
+                            // Si es la fecha y es una cadena ISO 8601, extrae solo la parte de la fecha
+                            value = value.substring(0, 10); // Toma los primeros 10 caracteres: "YYYY-MM-DD"
+                        }
+                      // 2. Asignar el valor (modificado o original) al input
+                        $('#' + key).val(value);                    
+                    }
+            }
+            $('#modalDetalleLabel').text('Artículos y Servicios');
+            //$('#key_fam_ref').html( $('#key_fam').val() + ' | ' + key_fam_ref.des_fam);
+            this.f_ui_inicializarFormulario();
+            //return  {msg_ok:true} 
+            return  {ok:true}           
+          } catch (error) {
+            //return  {msg_ok:false, message:error}
+            return  {ok:false, message:error}
+          }
+    },
+  
     ue_Aceptar : async function () {
   try {
     f_ui_inicializar_div_mensaje_modal();
@@ -400,10 +313,6 @@ console.log('f_genera_json_upd ca_w1020 ',$form);
 
     },
     
-    f_ui_inicializarFormulario : function () {     
-
-    },
-
     ue_Cancela : function () {
       var $encabez = $('#encabez');    
       if ($encabez.length) { 
@@ -421,5 +330,6 @@ console.log('f_genera_json_upd ca_w1020 ',$form);
               //$('#key_fam_ref').html( $('#key_fam').val() + ' | ' + key_fam_ref.des_fam);     
       } 
     }
-    
-}; 
+
+};
+ 
